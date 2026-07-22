@@ -1,0 +1,25 @@
+{{ define "main" }}
+<section class="hero">
+  <h1>{{ site.Title }}</h1>
+  <p>{{ site.Params.description }}</p>
+  <a class="button" href="/products/">Browse the store</a>
+</section>
+
+<h2 class="section-heading">Featured products</h2>
+<section class="product-grid">
+  {{ range first 6 (where site.RegularPages "Section" "products") }}
+    {{ partial "product-card.html" . }}
+  {{ end }}
+</section>
+
+{{ $upcoming := where (where site.RegularPages "Section" "events") "Date" ">=" now }}
+{{ with first 2 $upcoming.ByDate }}
+  <h2 class="section-heading">Upcoming events</h2>
+  <div class="event-list">
+    {{ range . }}
+      {{ partial "event-card.html" . }}
+    {{ end }}
+  </div>
+  <p><a href="/events/">See all events &rarr;</a></p>
+{{ end }}
+{{ end }}

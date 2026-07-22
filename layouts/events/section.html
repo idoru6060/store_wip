@@ -1,0 +1,27 @@
+{{ define "main" }}
+<h1>{{ .Title }}</h1>
+{{ .Content }}
+
+{{ $upcoming := where .RegularPages "Date" ">=" now }}
+{{ $past := where .RegularPages "Date" "<" now }}
+
+{{ if $upcoming }}
+  <h2 class="section-heading">Upcoming</h2>
+  <div class="event-list">
+    {{ range $upcoming.ByDate }}
+      {{ partial "event-card.html" . }}
+    {{ end }}
+  </div>
+{{ else }}
+  <p>No upcoming events right now — check back soon.</p>
+{{ end }}
+
+{{ if $past }}
+  <h2 class="section-heading">Past events</h2>
+  <div class="event-list">
+    {{ range $past }}
+      {{ partial "event-card.html" . }}
+    {{ end }}
+  </div>
+{{ end }}
+{{ end }}

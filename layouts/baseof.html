@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ if not .IsHome }}{{ .Title }} · {{ end }}{{ site.Title }}</title>
+  <meta name="description" content="{{ .Description | default site.Params.description }}">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-top">
+      <a class="brand" href="/">{{ site.Title }}</a>
+      <button id="cart-toggle" class="cart-button" aria-label="Open cart">
+        Cart <span id="cart-count" class="cart-count" hidden>0</span>
+      </button>
+    </div>
+    <nav class="tabs" aria-label="Main">
+      {{ range site.Menus.main }}
+        {{ $active := or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) }}
+        <a href="{{ .URL }}"{{ if $active }} class="active" aria-current="page"{{ end }}>{{ .Name }}</a>
+      {{ end }}
+    </nav>
+  </header>
+
+  <main>
+    {{ block "main" . }}{{ end }}
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; {{ now.Year }} {{ site.Title }}</p>
+  </footer>
+
+  {{ partial "cart.html" . }}
+  <script src="/js/cart.js"></script>
+</body>
+</html>

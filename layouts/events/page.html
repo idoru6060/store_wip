@@ -1,0 +1,10 @@
+{{ define "main" }}
+<article class="prose">
+  <h1>{{ .Title }}</h1>
+  <p class="event-meta">
+    {{ .Date.Format "Monday, January 2, 2006" }}{{ with .Params.time }} · {{ . }}{{ end }}{{ with .Params.location }} · {{ . }}{{ end }}
+  </p>
+  {{ .Content }}
+  <p><a href="/events/">&larr; All events</a></p>
+</article>
+{{ end }}

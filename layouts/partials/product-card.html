@@ -1,0 +1,13 @@
+<div class="product-card">
+  <a href="{{ .RelPermalink }}">
+    {{ with .Params.image }}<img src="{{ . }}" alt="{{ $.Title }}">{{ end }}
+    <h3>{{ .Title }}</h3>
+  </a>
+  <p class="price">${{ printf "%.2f" .Params.price }}</p>
+  <button class="button add-to-cart"
+    data-price-id="{{ .Params.stripe_price_id }}"
+    data-name="{{ .Title }}"
+    data-price="{{ .Params.price }}">
+    Add to cart
+  </button>
+</div>

@@ -1,0 +1,22 @@
+baseURL = 'https://example.com/'
+locale = 'en-us'
+title = 'My Store'
+disableKinds = ['taxonomy', 'term']
+buildFuture = true
+
+[params]
+  description = 'Quality goods, simply sold.'
+
+[menus]
+  [[menus.main]]
+    name = 'Store'
+    pageRef = '/products'
+    weight = 10
+  [[menus.main]]
+    name = 'Events'
+    pageRef = '/events'
+    weight = 20
+  [[menus.main]]
+    name = 'About Us'
+    pageRef = '/about'
+    weight = 30

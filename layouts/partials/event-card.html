@@ -1,0 +1,13 @@
+<div class="event-card{{ if .Date.Before now }} past{{ end }}">
+  <div class="event-when" aria-hidden="true">
+    <span class="event-month">{{ .Date.Format "Jan" }}</span>
+    <span class="event-day">{{ .Date.Format "2" }}</span>
+  </div>
+  <div>
+    <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+    <p class="event-meta">
+      {{ .Date.Format "Monday, January 2, 2006" }}{{ with .Params.time }} · {{ . }}{{ end }}{{ with .Params.location }} · {{ . }}{{ end }}
+    </p>
+    <p>{{ .Summary }}</p>
+  </div>
+</div>
