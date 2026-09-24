@@ -3,7 +3,7 @@
   {{ with .Params.image }}<img src="{{ . }}" alt="{{ $.Title }}">{{ end }}
   <div class="product-info">
     <h1>{{ .Title }}</h1>
-    <p class="price">${{ printf "%.2f" .Params.price }}</p>
+    <p class="price">{{ site.Params.currency }}{{ printf "%.2f" .Params.price }}</p>
     {{ .Content }}
     <button class="button add-to-cart"
       data-price-id="{{ .Params.stripe_price_id }}"

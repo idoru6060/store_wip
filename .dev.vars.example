@@ -1,3 +1,12 @@
 # Copy to .dev.vars for local development with `wrangler pages dev`.
 # Use your Stripe TEST key locally (sk_test_...), the live key only in production.
 STRIPE_SECRET_KEY=sk_test_REPLACE_ME
+
+# Stripe webhook signing secret (Stripe Dashboard → Webhooks). Use a test
+# endpoint secret locally, or `stripe listen --forward-to localhost:8788/api/webhook`.
+STRIPE_WEBHOOK_SECRET=whsec_REPLACE_ME
+
+# Resend (email delivery). Create an account at resend.com and verify your domain.
+RESEND_API_KEY=re_REPLACE_ME
+FROM_EMAIL="Computer Cobbler <support@computercobbler.net>"
+CONTACT_EMAIL=support@computercobbler.net

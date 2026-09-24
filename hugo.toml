@@ -1,11 +1,13 @@
-baseURL = 'https://example.com/'
+baseURL = 'https://computercobbler.net/'
 locale = 'en-us'
-title = 'My Store'
+title = 'Computer Cobbler'
 disableKinds = ['taxonomy', 'term']
 buildFuture = true
 
 [params]
   description = 'Quality goods, simply sold.'
+  currency = '$'
+  contactEmail = 'support@computercobbler.net'
 
 [menus]
   [[menus.main]]

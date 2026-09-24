@@ -5,9 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ if not .IsHome }}{{ .Title }} · {{ end }}{{ site.Title }}</title>
   <meta name="description" content="{{ .Description | default site.Params.description }}">
+  <meta property="og:title" content="{{ if not .IsHome }}{{ .Title }} · {{ end }}{{ site.Title }}">
+  <meta property="og:description" content="{{ .Description | default site.Params.description }}">
+  <meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">
+  <meta property="og:url" content="{{ .Permalink }}">
+  <meta property="og:site_name" content="{{ site.Title }}">
+  {{ with .Params.image }}<meta property="og:image" content="{{ . | absURL }}">{{ end }}
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="theme-color" content="#1a1a1a">
   <link rel="stylesheet" href="/css/main.css">
 </head>
-<body>
+<body data-currency="{{ site.Params.currency }}">
   <header class="site-header">
     <div class="header-top">
       <a class="brand" href="/">{{ site.Title }}</a>
@@ -29,6 +38,12 @@
 
   <footer class="site-footer">
     <p>&copy; {{ now.Year }} {{ site.Title }}</p>
+    <nav class="footer-links" aria-label="Legal">
+      <a href="/privacy/">Privacy</a>
+      <a href="/terms/">Terms</a>
+      <a href="/shipping-returns/">Shipping &amp; Returns</a>
+    </nav>
+    <p class="footer-contact"><a href="mailto:{{ site.Params.contactEmail }}">{{ site.Params.contactEmail }}</a></p>
   </footer>
 
   {{ partial "cart.html" . }}

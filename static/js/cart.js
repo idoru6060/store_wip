@@ -1,5 +1,7 @@
 (function () {
   const STORAGE_KEY = 'cart';
+  const MAX_QUANTITY = 100;
+  const CURRENCY = document.body.dataset.currency || '$';
 
   function loadCart() {
     try {
@@ -18,7 +20,7 @@
     const cart = loadCart();
     const existing = cart.find((item) => item.priceId === priceId);
     if (existing) {
-      existing.quantity += 1;
+      existing.quantity = Math.min(existing.quantity + 1, MAX_QUANTITY);
     } else {
       cart.push({ priceId, name, price, quantity: 1 });
     }
@@ -32,13 +34,13 @@
       cart = cart.filter((item) => item.priceId !== priceId);
     } else {
       const item = cart.find((i) => i.priceId === priceId);
-      if (item) item.quantity = quantity;
+      if (item) item.quantity = Math.min(quantity, MAX_QUANTITY);
     }
     saveCart(cart);
   }
 
   function formatMoney(amount) {
-    return '$' + amount.toFixed(2);
+    return CURRENCY + amount.toFixed(2);
   }
 
   function render(cart) {

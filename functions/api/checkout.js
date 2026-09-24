@@ -9,9 +9,38 @@
 const MAX_ITEMS = 50;
 const MAX_QUANTITY = 100;
 
+// Simple in-memory rate limiter (per isolate). Best-effort only — for
+// production-grade limiting, add a Cloudflare WAF rate-limiting rule.
+const RATE_LIMIT_MAX = 10;
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const requestLog = new Map();
+
+function isRateLimited(ip) {
+  const now = Date.now();
+  const windowStart = now - RATE_LIMIT_WINDOW_MS;
+  const recent = (requestLog.get(ip) || []).filter((t) => t > windowStart);
+  recent.push(now);
+  requestLog.set(ip, recent);
+
+  if (requestLog.size > 10_000) {
+    for (const [key, times] of requestLog) {
+      if (times[times.length - 1] < windowStart) requestLog.delete(key);
+    }
+  }
+  return recent.length > RATE_LIMIT_MAX;
+}
+
 export async function onRequestPost({ request, env }) {
   if (!env.STRIPE_SECRET_KEY) {
     return jsonResponse({ error: 'Payments are not configured' }, 500);
+  }
+
+  const ip =
+    request.headers.get('CF-Connecting-IP') ||
+    request.headers.get('X-Forwarded-For')?.split(',')[0]?.trim() ||
+    'unknown';
+  if (isRateLimited(ip)) {
+    return jsonResponse({ error: 'Too many requests, please try again later' }, 429);
   }
 
   let body;
@@ -53,6 +82,7 @@ export async function onRequestPost({ request, env }) {
     headers: {
       Authorization: `Bearer ${env.STRIPE_SECRET_KEY}`,
       'Content-Type': 'application/x-www-form-urlencoded',
+      'Idempotency-Key': crypto.randomUUID(),
     },
     body: params,
   });

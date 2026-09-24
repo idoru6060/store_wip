@@ -28,4 +28,4 @@ throughout the year. Check the [events page](/events/) to see where we'll be
 next.
 
 Questions, wholesale inquiries, or just want to chat? Email us at
-**hello@example.com** — a real person reads every message.
+{{< email >}} — a real person reads every message.

@@ -204,6 +204,24 @@ a {
   font-size: 0.9rem;
 }
 
+.footer-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 0.5rem 0;
+}
+
+.footer-links a,
+.footer-contact a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.footer-links a:hover,
+.footer-contact a:hover {
+  text-decoration: underline;
+}
+
 /* Cart drawer */
 
 .cart-overlay {
